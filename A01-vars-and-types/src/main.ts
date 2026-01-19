@@ -41,6 +41,10 @@ if (!app) {
   throw new Error('#app not found');
 }
 
+const dangerous: any = '123';
+dangerous.toFixed(); // 実行時に落ちる
+
+
 app.innerHTML = `
   <span class="badge">a + b = ${sum(a, b)}</span>
   <span class="badge">c = ${c}</span>
