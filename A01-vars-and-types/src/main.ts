@@ -1,3 +1,6 @@
+import '../../style.css';
+import '../../styles.css';
+
 // ===== 変数と型 =====
 
 // 明示的な型注釈
@@ -6,6 +9,7 @@ const b: number = 3;
 
 // 型推論（TypeScriptが自動で number と判断）
 const c = 10;
+
 
 // 文字列
 const message: string = 'Hello TypeScript';

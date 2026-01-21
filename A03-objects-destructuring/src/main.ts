@@ -1,3 +1,6 @@
+import '../../style.css';
+import '../../styles.css';
+
 // ===== 1) サンプルデータ =====
 type User = {
   id: string;
