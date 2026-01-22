@@ -110,6 +110,7 @@ addRow('pick(user, ["id","name"])', publicUser);
 
 // NG例（わざと型エラーを体験したい場合）
 // const bad = pick(user, ['id', 'unknownKey']); // ← unknownKey は keyof User にないのでエラー
+// addRow('pick(user, ["id","unknownKey"])', bad);
 
 // ===== 7) 参照とコピーのまとめ情報 =====
 addRow('note', {
