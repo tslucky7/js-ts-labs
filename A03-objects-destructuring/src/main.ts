@@ -2,6 +2,9 @@ import '../../style.css';
 import '../../styles.css';
 
 // ===== 1) サンプルデータ =====
+/**
+ * ユーザー型
+ */
 type User = {
   id: string;
   name: string;
@@ -12,6 +15,9 @@ type User = {
   };
 };
 
+/**
+ * ユーザー
+ */
 const user: User = {
   id: 'u1',
   name: 'Takumi',
@@ -23,6 +29,11 @@ const user: User = {
 const rows = document.querySelector<HTMLTableSectionElement>('#rows');
 if (!rows) throw new Error('#rows not found');
 
+/**
+ * 行を追加する関数
+ * @param label ラベル
+ * @param value 値
+ */
 function addRow(label: string, value: unknown) {
   const tr = document.createElement('tr');
   tr.innerHTML = `
@@ -31,13 +42,19 @@ function addRow(label: string, value: unknown) {
   `;
   rows?.appendChild(tr);
 }
+
+/**
+ * HTMLエスケープを行う関数
+ * @param s 文字列
+ * @returns エスケープされた文字列
+ */
 function escapeHtml(s: string) {
   return s.replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]!));
 }
 
 // ===== 2) 参照（reference）を体験 =====
 const ref = user; // 同じ参照を指す（コピーではない）
-ref.name = 'Changed via ref';
+ref.name = '俺';
 
 addRow('original user after ref.name change', user);
 
@@ -46,7 +63,10 @@ const shallow = { ...user }; // top-level はコピーされる（しかしネ�
 shallow.name = 'Shallow name changed';
 shallow.address.city = 'Osaka (changed via shallow)';
 
+addRow('shallow user after shallow.name change', shallow);
 addRow('user after shallow.name change', user);
+
+addRow('shallow user after shallow.address.city change', shallow);
 addRow('user after shallow.address.city change', user);
 
 // ===== 4) 深いコピー（deep copy）を体験 =====
@@ -63,14 +83,20 @@ addRow('deep copy snapshot', deep);
 
 // ===== 5) 分割代入（destructuring） =====
 const {
-  id,
+  id: userId,
   name,
   address: { city },
 } = user;
 
-addRow('destructuring: {id, name, address.city}', { id, name, city });
+addRow('destructuring: {id, name, address.city}', { userId, name, city });
 
 // ===== 6) keyof と Pick（入口） =====
+/**
+ * オブジェクトから指定されたキーのみを取り出す関数
+ * @param obj オブジェクト
+ * @param keys キー
+ * @returns 取り出されたオブジェクト
+ */
 function pick<T, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> {
   const out = {} as Pick<T, K>;
   for (const k of keys) {
